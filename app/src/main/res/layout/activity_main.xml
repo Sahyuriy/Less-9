@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.example.sah.less_9.MainActivity">
+
+
+    <EditText
+        android:id="@+id/id"
+        android:hint="ID"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+    </EditText>
+    <EditText
+        android:id="@+id/fstName"
+        android:hint="First Name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+    </EditText>
+
+    <EditText
+        android:id="@+id/lstName"
+        android:hint="Last Name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+    </EditText>
+
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+    <Button
+        android:id="@+id/btnAdd"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Add">
+    </Button>
+    <Button
+        android:id="@+id/btnRead"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Read">
+    </Button>
+    </LinearLayout>
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <Button
+            android:id="@+id/btnUpd"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Upd">
+        </Button>
+        <Button
+            android:id="@+id/btnDel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Del">
+        </Button>
+    </LinearLayout>
+
+
+</LinearLayout>
+    <Button
+        android:id="@+id/btnClear"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Clear All">
+    </Button>
+
+
+    <TextView
+        android:id="@+id/tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <ListView
+        android:id="@+id/listView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+    </ListView>
+
+
+</LinearLayout>
