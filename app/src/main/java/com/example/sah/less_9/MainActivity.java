@@ -6,6 +6,9 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -19,19 +22,19 @@ import java.util.ArrayList;
 public class MainActivity extends AppCompatActivity {
 
 
-    Button btnAdd, btnRead, btnClear, btnUpd, btnDel;
-    EditText firstName, lastName, etID;
-    ListView listView;
-    TextView textView;
-    String[] columns = null;
-    String selection = null;
-    ArrayList<String> items = new ArrayList<>();
+    private Button btnAdd, btnRead, btnClear, btnUpd, btnDel;
+    private EditText firstName, lastName, etID;
 
-String[] strings;
-    String str;
-    int ke = 0;
+    private String[] columns = null;
+    private String selection = null;
+    private String[] selectionArgs = null;
+    private ArrayList<String> items = new ArrayList<>();
+    private String[] strings;
+    private String str;
+    private int ke = 0;
 
-    DBHelper dbHelper;
+
+    private DBHelper dbHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,8 +45,6 @@ String[] strings;
         etID = (EditText) findViewById(R.id.id);
         firstName = (EditText) findViewById(R.id.fstName);
         lastName = (EditText) findViewById(R.id.lstName);
-        listView = (ListView) findViewById(R.id.listView);
-        textView = (TextView) findViewById(R.id.tv);
 
 
         dbHelper = new DBHelper(this);
@@ -87,7 +88,7 @@ String[] strings;
             }
         });
 
-        btnRead = (Button) findViewById(R.id.btnRead);
+            btnRead = (Button) findViewById(R.id.btnRead);
         btnRead.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -95,18 +96,29 @@ String[] strings;
                 String fstName = firstName.getText().toString();
                 String lstName = lastName.getText().toString();
                 SQLiteDatabase database = dbHelper.getWritableDatabase();
-                Cursor cursor= database.query(DBHelper.TABLE_CONTACTS, null, null, null, null, null, null);
+                Cursor cursor;
 
 
                 ContentValues contentValues = new ContentValues();
                 ke = 0;
 
+                if (!_id.equals("")) {
+                    cursor = database.query(DBHelper.TABLE_CONTACTS, null, DBHelper.KEY_ID + "=" + _id, null, null, null, null);
+                }
+                else if (!fstName.equals("")){
+                    selection = "fstName = ?";
+                    selectionArgs = new String[] { fstName };
+                    cursor = database.query(DBHelper.TABLE_CONTACTS, null, selection, selectionArgs, null, null, null);
 
-                if (_id.equals("")) {
-                            cursor = database.query(DBHelper.TABLE_CONTACTS, null, null, null, null, null, null);
+                }
+                else if (!lstName.equals("")){
+                    selection = "lstName = ?";
+                    selectionArgs = new String[] { lstName };
+                    cursor = database.query(DBHelper.TABLE_CONTACTS, null, selection, selectionArgs, null, null, null);
                 }
                 else {
-                    cursor = database.query(DBHelper.TABLE_CONTACTS, null, DBHelper.KEY_ID + "=" + _id, null, null, null, null);
+
+                    cursor = database.query(DBHelper.TABLE_CONTACTS, null, null, null, null, null, null);
                 }
                 cursor.moveToFirst();
                 if (cursor.moveToFirst()) {
@@ -131,6 +143,12 @@ String[] strings;
                 etID.setText("");
                 lastName.setText("");
                 firstName.setText("");
+
+
+
+                getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.fragm, new BlankFragment(items))
+                        .commit();
             }
         });
 
